@@ -1,24 +1,32 @@
-const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = [
   {
     entry: {
-      home: './client/app/views/Home/Hydrate.js',
+      home: "./client/app/views/Home/Hydrate.tsx"
     },
     plugins: [
-      new CleanWebpackPlugin(['dist']),
+      new CleanWebpackPlugin(["dist"]),
       new MiniCssExtractPlugin({
-        filename: '[name].css',
+        filename: "[name].css"
       })
     ],
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"]
+    },
     output: {
-      path: path.join(__dirname, 'dist'),
+      path: path.join(__dirname, "dist"),
       filename: "[name].js"
     },
     module: {
       rules: [
+        {
+          test: /\.ts(x)*?$/,
+          use: "ts-loader",
+          exclude: /node_modules/
+        },
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -31,31 +39,29 @@ module.exports = [
         },
         {
           test: /\.(s)*css$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            "css-loader",
-            "postcss-loader",
-            "sass-loader",
-          ]
+          use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
           loader: "file-loader",
-          options: { name: './client/assets/[name].[ext]' }
+          options: { name: "./client/assets/[name].[ext]" }
         }
       ]
     }
   },
   {
     entry: {
-      server: './server/index.js'
+      server: "./server/index.tsx"
     },
-    mode: 'development',
+    mode: "development",
     output: {
-      filename: 'index.js',
-      path: path.resolve(__dirname, 'dist')
+      filename: "index.js",
+      path: path.resolve(__dirname, "dist")
     },
-    target: 'node',
+    target: "node",
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"]
+    },
     module: {
       rules: [
         {
@@ -64,6 +70,11 @@ module.exports = [
           use: {
             loader: "babel-loader"
           }
+        },
+        {
+          test: /\.ts(x)*?$/,
+          use: "ts-loader",
+          exclude: /node_modules/
         }
       ]
     }
