@@ -6,7 +6,8 @@
     "lib": ["dom", "es2018"],
     "baseUrl": "./",
     "paths": {
-      "@client/*": ["client/*"]
+      "@client/*": ["client/*"],
+      "@template/*": ["server/template/*"]
     },
     "sourceMap": true,
     "allowJs": true,

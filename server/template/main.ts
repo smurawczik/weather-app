@@ -24,7 +24,7 @@ export default ({ container, title, bundle, styles, scripts, data }: TemplatePar
         <div id="root">${container}</div>
         ${utilities.scriptTags(bundle)}
         ${utilities.scriptTags(scripts)}
-        </body>
+      </body>
     </html>
   `;
 };

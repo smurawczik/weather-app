@@ -1,22 +1,27 @@
 import express from "express";
-import React from "react";
-import ReactDOMServer from "react-dom/server";
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-import Home from "../client/app/views/Home/Home";
-import template from "./template/main";
+import HomeRoutes from './routes/Home';
+import WeatherApiRoutes from './routes/Weather';
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors())
+
 app.use(express.static("dist"));
 
-app.get("/", (req, res) => {
-  res.send(
-    template({ container: ReactDOMServer.renderToString(<Home />), title: "home", bundle: ["home"] })
-  );
-});
+// API ROUTES
+app.use(WeatherApiRoutes);
 
+// VIEW ROUTES
+app.use(HomeRoutes);
+
+// ERROR FALLBACK
 app.use((err, req, res, next) => {
   console.log(err);
   res.locals.message = err.message;
