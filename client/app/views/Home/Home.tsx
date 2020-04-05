@@ -1,17 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
 import Search from '../../components/Search/Search';
 import WeatherCard from '../../components/WeatherCard/WeatherCard';
 
-const Home = () => {
+const Home = ({ results }) => {
     return <div className="home">
         <Search />
-        <div className="weather-cards">
-            <div className="weather-cards-card"><WeatherCard /></div>
-            <div className="weather-cards-card"><WeatherCard /></div>
-            <div className="weather-cards-card"><WeatherCard /></div>
-        </div>
+        {
+            results && <div className="weather-cards">
+                {
+                    results.map((result, index) => {
+                        return <div className="weather-cards-card" key={index}><WeatherCard weatherData={result} /></div>
+                    })
+                }
+            </div>
+        }
     </div>;
 };
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        results: state.results,
+    }
+}
+
+export default connect(mapStateToProps, null)(Home);
