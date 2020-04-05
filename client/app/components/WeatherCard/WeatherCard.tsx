@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import WeatherCardBlock from '../WeatherCardBlock/WeatherCardBlock';
 
@@ -15,24 +18,10 @@ const useStyles = makeStyles({
   }
 });
 
-const WeatherCard = ({ weatherData }) => {
-  // const weatherData = {
-  //   coord: { lon: -58.38, lat: -34.61 },
-  //   weather: [{ id: 800, main: "Clear", description: "clear sky", icon: "01n" }],
-  //   base: "stations",
-  //   main: { temp: 294.1, feels_like: 292.85, temp_min: 293.15, temp_max: 295.37, pressure: 1010, humidity: 56 },
-  //   visibility: 10000,
-  //   wind: { speed: 2.6, deg: 340 },
-  //   clouds: { all: 0 },
-  //   dt: 1586041483,
-  //   sys: { type: 1, id: 8224, country: "AR", sunrise: 1585994912, sunset: 1586036627 },
-  //   timezone: -10800,
-  //   id: 3435910,
-  //   name: "Buenos Aires",
-  //   cod: 200,
-  // };
-
+const WeatherCard = ({ weatherData, toggleFavorite }) => {
   const classes = useStyles();
+  const [isWeatherFavorite, setIsFavorite] = useState(weatherData.isFavorite);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   return (
     <Card elevation={3} classes={classes}>
@@ -40,31 +29,55 @@ const WeatherCard = ({ weatherData }) => {
         <h3>{weatherData.name}</h3>
         <WeatherCardBlock leftData={{
           title: "Min Temp.",
-          data: (weatherData.main.temp_min / 10).toFixed(1)
+          data: (weatherData.main.temp_min / 10).toFixed(1) + "º"
         }} rightData={{
           title: "Max Temp.",
-          data: (weatherData.main.temp_max / 10).toFixed(1)
+          data: (weatherData.main.temp_max / 10).toFixed(1) + "º"
         }} />
         <WeatherCardBlock leftData={{
           title: "Temp.",
-          data: (weatherData.main.temp / 10).toFixed(1)
+          data: (weatherData.main.temp / 10).toFixed(1) + "º"
         }} rightData={{
           title: "Feels like.",
-          data: (weatherData.main.feels_like / 10).toFixed(1)
+          data: (weatherData.main.feels_like / 10).toFixed(1) + "º"
         }} />
         <WeatherCardBlock leftData={{
           title: "Humidity.",
-          data: weatherData.main.humidity
+          data: weatherData.main.humidity + "%"
         }} rightData={{
-          title: "Wind.",
+          title: "Wind (km/h)",
           data: weatherData.wind.speed
         }} />
       </CardContent>
       <CardActions>
-        <IconButton><FavoriteBorderIcon style={{ color: '#64b5f6' }} /></IconButton>
+        <IconButton onClick={() => {
+          setIsFavorite(!weatherData.isFavorite);
+          setSnackbarOpen(true);
+          toggleFavorite(weatherData.id, !weatherData.isFavorite);
+        }}>{isWeatherFavorite ? <FavoriteIcon style={{ color: '#64b5f6' }} /> : <FavoriteBorderIcon style={{ color: '#64b5f6' }} />}</IconButton>
       </CardActions>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        key={`bottom,center`}
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        autoHideDuration={3000}
+        message={
+          isWeatherFavorite
+            ?
+            `${weatherData.name} agregado a favoritos`
+            :
+            `${weatherData.name} removido de favoritos`
+        }
+      />
     </Card>
   )
 };
 
-export default WeatherCard;
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleFavorite: (id, isFavorite) => dispatch({ type: 'TOGGLE_FAVORITE', id, isFavorite })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WeatherCard);

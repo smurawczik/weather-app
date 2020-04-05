@@ -17,9 +17,13 @@ declare global {
 
 const preloadedState = window.__INITIAL__;
 
-delete window.__INITIAL__
+delete window.__INITIAL__;
 
-const store = createStore(rootReducer, preloadedState)
+const storeInLocalStorage = JSON.parse(localStorage.getItem('weather-app') || JSON.stringify({}));
 
+const store = createStore(rootReducer, Object.assign(preloadedState, storeInLocalStorage));
+store.subscribe(() => {
+  localStorage && localStorage.setItem('weather-app', JSON.stringify(store.getState()));
+});
 
 ReactDOM.hydrate(<Provider store={store}><Home /></Provider>, document.getElementById('root'));

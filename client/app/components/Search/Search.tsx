@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -27,18 +28,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = () => {
+const Search = ({ setLastSearch, setResults, lastSearch }) => {
   const classes = useStyles();
 
-  const [cities, setCities] = useState('');
+  const [cities, setCities] = useState(lastSearch);
+
+  const fetchWeather = () => {
+    setLastSearch(cities);
+    let citiesArray = cities.split(",");
+    WeatherService.getWeatherByCities(citiesArray)
+      .then((weathers) => {
+        setResults(weathers.data);
+      });
+  }
 
   const searchWeathers = (e) => {
     e.preventDefault();
-    let citiesArray = cities.split(",");
-    WeatherService.getWeatherByCities(citiesArray)
+    fetchWeather();
   }
 
-  return <Paper component="form" className={classes.root}>
+  return <Paper component="form" className={classes.root} onSubmit={searchWeathers}>
     <InputBase
       className={classes.input}
       value={cities}
@@ -52,4 +61,17 @@ const Search = () => {
   </Paper>
 };
 
-export default Search;
+const mapDispatchToProps = dispatch => {
+  return {
+    setLastSearch: (queryValue) => dispatch({ type: 'SET_LAST_SEARCH', queryValue }),
+    setResults: (results) => dispatch({ type: 'SET_RESULTS', results })
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    lastSearch: state.lastCitySearch,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

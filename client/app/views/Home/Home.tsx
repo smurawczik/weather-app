@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import Search from '../../components/Search/Search';
 import WeatherCard from '../../components/WeatherCard/WeatherCard';
