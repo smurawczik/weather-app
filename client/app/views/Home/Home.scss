@@ -1,6 +1,36 @@
+@import "../../components/WeatherCardBlock/WeatherCardBlock.scss";
+
+body {
+  font-family: "Roboto", Arial;
+  font-weight: 200;
+  background: #1488cc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #2b32b2, #1488cc); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #2b32b2,
+    #1488cc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin: 0;
+}
+
 .home {
   align-items: center;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.weather-cards {
+  width: 100vw;
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  &-card {
+    margin-bottom: 16px;
+  }
 }

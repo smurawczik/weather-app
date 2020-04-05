@@ -16,6 +16,7 @@ export default ({ container, title, bundle, styles, scripts, data }: TemplatePar
       <head>
         ${utilities.metaTags()}
         <title>${title || "Default title"}</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
         ${utilities.linkTags(bundle)}
         ${utilities.linkTags(styles)}
         ${utilities.initialData(data)}

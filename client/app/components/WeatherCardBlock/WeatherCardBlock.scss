@@ -1,0 +1,23 @@
+.weather-card-block {
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
+
+  &-data-container {
+    display: flex;
+    flex-direction: column;
+
+    &.right-data {
+      text-align: right;
+    }
+  }
+
+  .weather-data-block-data {
+    font-size: 2em;
+  }
+
+  .weather-data-block-title {
+    font-weight: 300;
+    font-size: 0.8em;
+  }
+}
