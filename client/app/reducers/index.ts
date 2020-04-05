@@ -48,10 +48,12 @@ interface Sys {
 type InitialState = {
   lastCitySearch: string;
   results: Weather[];
+  performSearch: boolean;
 };
 
 const initialState: InitialState = {
   lastCitySearch: "",
+  performSearch: false,
   results: [],
 };
 
@@ -67,6 +69,12 @@ const defaultReducer = (state = initialState, action) => {
       return {
         ...state,
         results: action.results,
+      };
+    }
+    case "OFF_PERFORM_SEARCH": {
+      return {
+        ...state,
+        performSearch: false,
       };
     }
     case "TOGGLE_FAVORITE": {

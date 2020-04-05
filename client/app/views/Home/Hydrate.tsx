@@ -21,7 +21,12 @@ delete window.__INITIAL__;
 
 const storeInLocalStorage = JSON.parse(localStorage.getItem('weather-app') || JSON.stringify({}));
 
-const store = createStore(rootReducer, Object.assign(preloadedState, storeInLocalStorage));
+const locationSearch = location.search.replace("?", "");
+const locationSearchQuery = locationSearch.split("=");
+
+const lastSearch = { lastCitySearch: decodeURI(locationSearchQuery[1]) || "", performSearch: true }
+
+const store = createStore(rootReducer, Object.assign(preloadedState, storeInLocalStorage, lastSearch));
 store.subscribe(() => {
   localStorage && localStorage.setItem('weather-app', JSON.stringify(store.getState()));
 });

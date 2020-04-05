@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({ setLastSearch, setResults, lastSearch }) => {
+const Search = ({ setLastSearch, setResults, lastSearch, performSearch, offPerformSearch }) => {
   const classes = useStyles();
 
   const [cities, setCities] = useState(lastSearch);
@@ -38,13 +38,25 @@ const Search = ({ setLastSearch, setResults, lastSearch }) => {
     let citiesArray = cities.split(",");
     WeatherService.getWeatherByCities(citiesArray)
       .then((weathers) => {
+        pushToHistory();
         setResults(weathers.data);
       });
+  }
+
+  const pushToHistory = () => {
+    if (history) {
+      history.pushState({}, '', `?query=${cities}`);
+    }
   }
 
   const searchWeathers = (e) => {
     e.preventDefault();
     fetchWeather();
+  }
+
+  if (performSearch) {
+    fetchWeather();
+    offPerformSearch();
   }
 
   return <Paper component="form" className={classes.root} onSubmit={searchWeathers}>
@@ -64,13 +76,15 @@ const Search = ({ setLastSearch, setResults, lastSearch }) => {
 const mapDispatchToProps = dispatch => {
   return {
     setLastSearch: (queryValue) => dispatch({ type: 'SET_LAST_SEARCH', queryValue }),
-    setResults: (results) => dispatch({ type: 'SET_RESULTS', results })
+    setResults: (results) => dispatch({ type: 'SET_RESULTS', results }),
+    offPerformSearch: () => dispatch({ type: 'OFF_PERFORM_SEARCH' })
   }
 }
 
 const mapStateToProps = state => {
   return {
     lastSearch: state.lastCitySearch,
+    performSearch: state.performSearch,
   }
 }
 
