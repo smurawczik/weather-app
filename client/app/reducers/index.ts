@@ -51,7 +51,7 @@ type InitialState = {
   performSearch: boolean;
 };
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   lastCitySearch: "",
   performSearch: false,
   results: [],

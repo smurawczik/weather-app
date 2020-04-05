@@ -51,10 +51,12 @@ const Search = ({ setLastSearch, setResults, lastSearch, performSearch, offPerfo
 
   const searchWeathers = (e) => {
     e.preventDefault();
-    fetchWeather();
+    if (cities) {
+      fetchWeather();
+    }
   }
 
-  if (performSearch) {
+  if (performSearch && lastSearch !== "") {
     fetchWeather();
     offPerformSearch();
   }

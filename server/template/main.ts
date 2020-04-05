@@ -6,10 +6,11 @@ type TemplateParams = {
   bundle: string[];
   styles?: string[];
   scripts?: string[];
+  inlineCSS?: string;
   data?: any;
 };
 
-export default ({ container, title, bundle, styles, scripts, data }: TemplateParams) => {
+export default ({ container, title, bundle, styles, scripts, inlineCSS, data }: TemplateParams) => {
   return `
     <!DOCTYPE html>
       <html>
@@ -20,6 +21,7 @@ export default ({ container, title, bundle, styles, scripts, data }: TemplatePar
         ${utilities.linkTags(bundle)}
         ${utilities.linkTags(styles)}
         ${utilities.initialData(data)}
+        ${inlineCSS}
       </head>
       <body>
         <div id="root">${container}</div>
