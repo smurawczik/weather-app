@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Loading from '../../components/Loading/Loading';
+import WeatherSnackbar from '../../components/WeatherSnackbar/WeatherSnackbar';
 import Search from '../../components/Search/Search';
 import WeatherCard from '../../components/WeatherCard/WeatherCard';
 
-const Home = ({ results, isLoading }) => {
+const Home = ({ results, isLoading, showErrorSnack }) => {
     return <div className="home">
         <Search />
         {
@@ -24,6 +25,7 @@ const Home = ({ results, isLoading }) => {
         {
             isLoading && <Loading />
         }
+        <WeatherSnackbar isOpen={showErrorSnack} />
     </div>;
 };
 
@@ -31,6 +33,7 @@ const mapStateToProps = state => {
     return {
         results: state.results,
         isLoading: state.isLoading,
+        showErrorSnack: state.showErrorSnack,
     }
 }
 

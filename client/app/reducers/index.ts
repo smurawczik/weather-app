@@ -50,6 +50,7 @@ type InitialState = {
   results: Weather[];
   performSearch: boolean;
   isLoading: boolean;
+  showErrorSnack: boolean;
 };
 
 export const initialState: InitialState = {
@@ -57,6 +58,7 @@ export const initialState: InitialState = {
   performSearch: false,
   results: [],
   isLoading: false,
+  showErrorSnack: false,
 };
 
 const defaultReducer = (state = initialState, action) => {
@@ -77,6 +79,12 @@ const defaultReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.isLoading,
+      };
+    }
+    case "TOGGLE_ERROR_SNACK": {
+      return {
+        ...state,
+        showErrorSnack: action.showErrorSnack,
       };
     }
     case "OFF_PERFORM_SEARCH": {

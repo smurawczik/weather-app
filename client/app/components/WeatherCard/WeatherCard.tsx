@@ -29,17 +29,17 @@ const WeatherCard = ({ weatherData, toggleFavorite }) => {
         <h3>{weatherData.name}</h3>
         <WeatherCardBlock leftData={{
           title: "Min Temp.",
-          data: (weatherData.main.temp_min / 10).toFixed(1) + "º"
+          data: (weatherData.main.temp_min).toFixed(1) + "º"
         }} rightData={{
           title: "Max Temp.",
-          data: (weatherData.main.temp_max / 10).toFixed(1) + "º"
+          data: (weatherData.main.temp_max).toFixed(1) + "º"
         }} />
         <WeatherCardBlock leftData={{
           title: "Temp.",
-          data: (weatherData.main.temp / 10).toFixed(1) + "º"
+          data: (weatherData.main.temp).toFixed(1) + "º"
         }} rightData={{
           title: "Feels like.",
-          data: (weatherData.main.feels_like / 10).toFixed(1) + "º"
+          data: (weatherData.main.feels_like).toFixed(1) + "º"
         }} />
         <WeatherCardBlock leftData={{
           title: "Humidity.",

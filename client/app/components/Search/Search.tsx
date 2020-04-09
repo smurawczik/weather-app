@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({ setLastSearch, setResults, setIsLoading, lastSearch, performSearch, offPerformSearch }) => {
+const Search = ({ setLastSearch, setResults, setIsLoading, toggleErrorSnack, lastSearch, performSearch, offPerformSearch }) => {
   const classes = useStyles();
 
   const [cities, setCities] = useState(lastSearch);
@@ -42,6 +42,13 @@ const Search = ({ setLastSearch, setResults, setIsLoading, lastSearch, performSe
         setIsLoading(false);
         pushToHistory();
         setResults(weathers.data);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        toggleErrorSnack(true);
+        setTimeout(() => {
+          toggleErrorSnack(false);
+        }, 4000);
       });
   }
 
@@ -82,7 +89,8 @@ const mapDispatchToProps = dispatch => {
     setLastSearch: (queryValue) => dispatch({ type: 'SET_LAST_SEARCH', queryValue }),
     setResults: (results) => dispatch({ type: 'SET_RESULTS', results }),
     setIsLoading: (isLoading) => dispatch({ type: 'SET_IS_LOADING', isLoading }),
-    offPerformSearch: () => dispatch({ type: 'OFF_PERFORM_SEARCH' })
+    offPerformSearch: () => dispatch({ type: 'OFF_PERFORM_SEARCH' }),
+    toggleErrorSnack: (showErrorSnack) => dispatch({ type: 'TOGGLE_ERROR_SNACK', showErrorSnack }),
   }
 }
 

@@ -4,31 +4,31 @@ const WeatherService = () => {
   const weatherConditionsMap = {
     THUNDERSTORM: {
       name: "Thunderstorm",
-      icon: "",
+      icon: "./assets/thunderstorm.svg",
     },
     DRIZZLE: {
       name: "Drizzle",
-      icon: "",
+      icon: "./assets/drizzle.svg",
     },
     RAIN: {
       name: "Rain",
-      icon: "",
+      icon: "./assets/rain.svg",
     },
     SNOW: {
       name: "Snow",
-      icon: "",
+      icon: "./assets/snow.svg",
     },
     ATMOSPHERE: {
       name: "Atmosphere",
-      icon: "",
+      icon: "./assets/atmosphere.svg",
     },
     CLEAR: {
       name: "Clear",
-      icon: "",
+      icon: "./assets/clear.svg",
     },
     CLOUDS: {
       name: "Clouds",
-      icon: "",
+      icon: "./assets/clouds.svg",
     },
   };
 
