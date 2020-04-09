@@ -11,10 +11,13 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import WeatherCardBlock from '../WeatherCardBlock/WeatherCardBlock';
 
+import * as WeatherIcons from '../Icons/index';
+
 const useStyles = makeStyles({
   root: {
     color: '#fff',
-    backgroundColor: 'rgba(255,255,255, 0.15)',
+    backgroundColor: 'rgba(0, 0, 0, 0.15)',
+    position: 'relative',
   }
 });
 
@@ -23,10 +26,12 @@ const WeatherCard = ({ weatherData, toggleFavorite }) => {
   const [isWeatherFavorite, setIsFavorite] = useState(weatherData.isFavorite);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+  const CurrentWeatherIcon = WeatherIcons.hasOwnProperty(weatherData.weather[0].main) ? WeatherIcons[weatherData.weather[0].main] : WeatherIcons.Atmosphere;
   return (
     <Card elevation={3} classes={classes}>
+      <div className='weatherIcon'><CurrentWeatherIcon width='100%' height='200' /></div>
       <CardContent>
-        <h3>{weatherData.name}</h3>
+        <h3 className='weatherCityName'>{weatherData.name}</h3>
         <WeatherCardBlock leftData={{
           title: "Min Temp.",
           data: (weatherData.main.temp_min).toFixed(1) + "º"
@@ -50,11 +55,15 @@ const WeatherCard = ({ weatherData, toggleFavorite }) => {
         }} />
       </CardContent>
       <CardActions>
-        <IconButton onClick={() => {
-          setIsFavorite(!weatherData.isFavorite);
+        <IconButton>{isWeatherFavorite ? <FavoriteIcon style={{ color: '#FFF' }} onClick={() => {
+          setIsFavorite(false);
+          toggleFavorite(weatherData.id, false);
           setSnackbarOpen(true);
-          toggleFavorite(weatherData.id, !weatherData.isFavorite);
-        }}>{isWeatherFavorite ? <FavoriteIcon style={{ color: '#64b5f6' }} /> : <FavoriteBorderIcon style={{ color: '#64b5f6' }} />}</IconButton>
+        }} /> : <FavoriteBorderIcon style={{ color: '#FFF' }} onClick={() => {
+          setIsFavorite(true);
+          toggleFavorite(weatherData.id, true);
+          setSnackbarOpen(true);
+        }} />}</IconButton>
       </CardActions>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

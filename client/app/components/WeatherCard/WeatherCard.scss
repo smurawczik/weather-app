@@ -1,0 +1,14 @@
+.weatherIcon {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 40%;
+  bottom: 0;
+  opacity: 0.65;
+}
+
+.weatherCityName {
+  font-weight: 300;
+  text-shadow: 1px 1px 7px #000, -1px -1px 7px #000;
+}

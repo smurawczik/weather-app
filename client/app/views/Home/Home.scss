@@ -1,6 +1,7 @@
 @import "../../components/WeatherCardBlock/WeatherCardBlock.scss";
 @import "../../components/Loading/Loading.scss";
 @import "../../components/WeatherSnackbar/WeatherSnackbar.scss";
+@import "../../components/WeatherCard/WeatherCard.scss";
 
 body {
   font-family: "Roboto", Arial;
@@ -19,7 +20,7 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   padding: 16px;
   box-sizing: border-box;
