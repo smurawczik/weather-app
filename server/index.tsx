@@ -22,7 +22,7 @@ app.use(WeatherApiRoutes);
 app.use(HomeRoutes);
 
 // ERROR FALLBACK
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};

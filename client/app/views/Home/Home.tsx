@@ -5,7 +5,7 @@ import Loading from '../../components/Loading/Loading';
 import Search from '../../components/Search/Search';
 import WeatherCard from '../../components/WeatherCard/WeatherCard';
 
-const Home = ({ results }) => {
+const Home = ({ results, isLoading }) => {
     return <div className="home">
         <Search />
         {
@@ -21,13 +21,16 @@ const Home = ({ results }) => {
                 :
                 null
         }
-        <span><Loading /></span>
+        {
+            isLoading && <Loading />
+        }
     </div>;
 };
 
 const mapStateToProps = state => {
     return {
         results: state.results,
+        isLoading: state.isLoading,
     }
 }
 

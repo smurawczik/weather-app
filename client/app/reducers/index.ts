@@ -49,12 +49,14 @@ type InitialState = {
   lastCitySearch: string;
   results: Weather[];
   performSearch: boolean;
+  isLoading: boolean;
 };
 
 export const initialState: InitialState = {
   lastCitySearch: "",
   performSearch: false,
   results: [],
+  isLoading: false,
 };
 
 const defaultReducer = (state = initialState, action) => {
@@ -69,6 +71,12 @@ const defaultReducer = (state = initialState, action) => {
       return {
         ...state,
         results: action.results,
+      };
+    }
+    case "SET_IS_LOADING": {
+      return {
+        ...state,
+        isLoading: action.isLoading,
       };
     }
     case "OFF_PERFORM_SEARCH": {

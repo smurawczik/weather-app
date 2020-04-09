@@ -28,16 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({ setLastSearch, setResults, lastSearch, performSearch, offPerformSearch }) => {
+const Search = ({ setLastSearch, setResults, setIsLoading, lastSearch, performSearch, offPerformSearch }) => {
   const classes = useStyles();
 
   const [cities, setCities] = useState(lastSearch);
 
   const fetchWeather = () => {
+    setIsLoading(true);
     setLastSearch(cities);
     let citiesArray = cities.split(",");
     WeatherService.getWeatherByCities(citiesArray)
       .then((weathers) => {
+        setIsLoading(false);
         pushToHistory();
         setResults(weathers.data);
       });
@@ -79,6 +81,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setLastSearch: (queryValue) => dispatch({ type: 'SET_LAST_SEARCH', queryValue }),
     setResults: (results) => dispatch({ type: 'SET_RESULTS', results }),
+    setIsLoading: (isLoading) => dispatch({ type: 'SET_IS_LOADING', isLoading }),
     offPerformSearch: () => dispatch({ type: 'OFF_PERFORM_SEARCH' })
   }
 }
