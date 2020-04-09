@@ -10,11 +10,13 @@ npm install
 
 after that you need to run 2 commands in 2 different tabs of your preferred terminal
 
+first run:
+
 ```
 npm run watch
 ```
 
-and in the 2nd tab
+and in the 2nd tab after the watch transpiled initial files, run:
 
 ```
 npm run start-dev
